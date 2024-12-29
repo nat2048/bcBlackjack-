@@ -1,227 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BC Dice Blackjack</title>
-    <link rel="stylesheet" href="styles.css">
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const dealerField = document.getElementById('dealerField');
-            const playerContainer = document.getElementById('playerContainer');
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dice Blackjack</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Remove spinner/arrows from number inputs */
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
 
-            const cardMapping = roll => {
-                if (roll === 1) return { card: "Ace", value: 11 }; // Ace initially counts as 11
-                if (roll >= 2 && roll <= 9) return { card: roll.toString(), value: roll };
-                if (roll === 10) {
-                    const faceCards = ["King", "Queen", "Jack"];
-                    const card = faceCards[Math.floor(Math.random() * faceCards.length)];
-                    return { card, value: 10 };
-                }
-            };
-
-            const addPlayer = () => {
-                const playerDiv = document.createElement('div');
-                const playerName = prompt('Enter player name:');
-                if (!playerName) return;
-
-                playerDiv.className = 'player';
-                playerDiv.innerHTML = `
-                    <h3>${playerName}</h3>
-                    <input type="number" class="rollInput" min="1" max="10" placeholder="Enter roll (1-10)" />
-                    <button class="addRoll">Add Roll</button>
-                    <button class="removePlayer">Remove</button>
-                    <p>Total: <span class="total">0</span> <span class="bust" style="color: red; display: none;">BUST</span></p>
-                    <p>Rolls: <span class="rolls"></span></p>
-                `;
-
-                playerContainer.appendChild(playerDiv);
-
-                const rollInput = playerDiv.querySelector('.rollInput');
-                const addRollButton = playerDiv.querySelector('.addRoll');
-                const removeButton = playerDiv.querySelector('.removePlayer');
-                const totalDisplay = playerDiv.querySelector('.total');
-                const rollsDisplay = playerDiv.querySelector('.rolls');
-                const bustIndicator = playerDiv.querySelector('.bust');
-
-                let total = 0;
-                const rolls = [];
-                const cards = [];
-
-                const updateRoll = () => {
-                    const roll = parseInt(rollInput.value, 10);
-                    if (isNaN(roll) || roll < 1 || roll > 10) {
-                        alert('Please enter a valid number between 1 and 10.');
-                        return;
-                    }
-
-                    const card = cardMapping(roll);
-                    rolls.push(roll);
-                    cards.push(card.card);
-                    total += card.value;
-
-                    // Adjust Ace value if total exceeds 21
-                    if (total > 21 && cards.includes("Ace")) {
-                        total -= 10; // Count Ace as 1 instead of 11
-                        cards[cards.indexOf("Ace")] = "Ace (1)";
-                    }
-
-                    totalDisplay.textContent = total;
-                    rollsDisplay.textContent = cards.join(', ');
-
-                    if (total > 21) {
-                        bustIndicator.style.display = 'inline';
-                    } else {
-                        bustIndicator.style.display = 'none';
-                    }
-
-                    rollInput.value = '';
-                };
-
-                addRollButton.addEventListener('click', updateRoll);
-
-                rollInput.addEventListener('keydown', event => {
-                    if (event.key === 'Enter') {
-                        updateRoll();
-                    }
-                });
-
-                removeButton.addEventListener('click', () => {
-                    playerDiv.remove();
-                });
-            };
-
-            document.getElementById('addPlayerButton').addEventListener('click', addPlayer);
-
-            const dealerRolls = [];
-            const dealerCards = [];
-            let dealerTotal = 0;
-
-            const addDealerRoll = () => {
-                const dealerInput = document.getElementById('dealerRollInput');
-                const dealerRoll = parseInt(dealerInput.value, 10);
-                const dealerTotalDisplay = document.getElementById('dealerTotal');
-                const dealerRollsDisplay = document.getElementById('dealerRolls');
-
-                if (isNaN(dealerRoll) || dealerRoll < 1 || dealerRoll > 10) {
-                    alert('Please enter a valid number between 1 and 10.');
-                    return;
-                }
-
-                const card = cardMapping(dealerRoll);
-                dealerRolls.push(dealerRoll);
-                dealerCards.push(card.card);
-                dealerTotal += card.value;
-
-                // Adjust Ace value if total exceeds 21
-                if (dealerTotal > 21 && dealerCards.includes("Ace")) {
-                    dealerTotal -= 10;
-                    dealerCards[dealerCards.indexOf("Ace")] = "Ace (1)";
-                }
-
-                dealerTotalDisplay.textContent = dealerTotal;
-                dealerRollsDisplay.textContent = dealerCards.join(', ');
-                dealerInput.value = '';
-
-                if (dealerTotal > 21 || dealerTotal >= 17) {
-                    passDealer();
-                }
-            };
-
-            const resetAll = () => {
-                dealerRolls.length = 0;
-                dealerCards.length = 0;
-                dealerTotal = 0;
-                document.getElementById('dealerTotal').textContent = dealerTotal;
-                document.getElementById('dealerRolls').textContent = '';
-
-                document.querySelectorAll('.player').forEach(playerDiv => {
-                    const totalDisplay = playerDiv.querySelector('.total');
-                    const rollsDisplay = playerDiv.querySelector('.rolls');
-                    const bustIndicator = playerDiv.querySelector('.bust');
-
-                    totalDisplay.textContent = '0';
-                    rollsDisplay.textContent = '';
-                    bustIndicator.style.display = 'none';
-
-                    const result = playerDiv.querySelector('.result');
-                    if (result) result.remove();
-                });
-
-                const dealerBustIndicator = document.getElementById('dealerBust');
-                dealerBustIndicator.style.display = 'none';
-            };
-
-            const passDealer = () => {
-                const dealerTotal = parseInt(document.getElementById('dealerTotal').textContent, 10);
-                const dealerBustIndicator = document.getElementById('dealerBust');
-
-                if (dealerTotal > 21) {
-                    dealerBustIndicator.style.display = 'inline';
-                } else {
-                    dealerBustIndicator.style.display = 'none';
-                }
-
-                document.querySelectorAll('.player').forEach(playerDiv => {
-                    const playerTotal = parseInt(playerDiv.querySelector('.total').textContent, 10);
-                    const bustIndicator = playerDiv.querySelector('.bust').style.display === 'inline';
-                    const result = playerDiv.querySelector('.result');
-
-                    if (!result) {
-                        const resultSpan = document.createElement('span');
-                        resultSpan.className = 'result';
-                        playerDiv.appendChild(resultSpan);
-                    }
-
-                    if (bustIndicator) {
-                        playerDiv.querySelector('.result').textContent = ' - You Lost (BUST)';
-                    } else if (playerTotal > dealerTotal || dealerTotal > 21) {
-                        playerDiv.querySelector('.result').textContent = ' - You Win';
-                    } else if (playerTotal === dealerTotal) {
-                        playerDiv.querySelector('.result').textContent = ' - Tie';
-                    } else {
-                        playerDiv.querySelector('.result').textContent = ' - You Lost';
-                    }
-                });
-            };
-
-            document.getElementById('addDealerRollButton').addEventListener('click', addDealerRoll);
-            document.getElementById('resetAllButton').addEventListener('click', resetAll);
-            document.getElementById('passDealerButton').addEventListener('click', passDealer);
-        });
-    </script>
+    input[type=number] {
+      -moz-appearance: textfield; /* For Firefox */
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>BC Dice Blackjack</h1>
-        <nav>
+  <header>
+    <h1>BC Dice Blackjack</h1>
+    <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="rules.html">Rules</a></li>
-                <li><a href="prices.html">Prices</a></li>
+                <li><a href="prices.html" class="active">Prices</a></li>
                 <li><a href="deal.html">Dealer tool</a></li>
             </ul>
         </nav>
-    </header>
-
-    <main>
-        <h2>Dealer</h2>
-        <div id="dealerField">
-            <input type="number" id="dealerRollInput" min="1" max="10" placeholder="Enter roll (1-10)" />
-            <button id="addDealerRollButton">Add Roll</button>
-            <button id="resetAllButton">Reset All</button>
+  </header>
+  <main>
+    <section>
+      <h2>Dealer</h2>
+      <div id="dealerField">
+        <div id="dealer-space"></div>
+        <div class="player">
+          <label for="dealer-roll-input">Enter Roll (1-10):</label>
+          <input type="number" id="dealer-roll-input" min="1" max="10">
+          <button id="addDealerRollButton" onclick="addDealerRoll()">Add Roll to Dealer</button>
         </div>
-        <p>Total: <span id="dealerTotal">0</span> <span id="dealerBust" style="color: red; display: none;">BUST</span></p>
-        <p>Rolls: <span id="dealerRolls"></span></p>
-        <button id="passDealerButton">Pass</button>
+      </div>
+    </section>
 
-        <h2>Players</h2>
-        <div id="playerContainer"></div>
-        <button id="addPlayerButton">Add Player</button>
-    </main>
+    <section>
+      <h2>Players</h2>
+      <div id="playerContainer"></div>
+      <button id="addPlayerButton" onclick="addPlayer()">Add Player</button>
+    </section>
 
-    <footer>
-        <p>&copy; Nat #134353</p>
-    </footer>
+    <section>
+      <h2>Controls</h2>
+      <button id="resetAllButton" onclick="resetGame()">Reset Rolls</button>
+      <button id="passDealerButton" onclick="evaluateGame()">Evaluate Game</button>
+    </section>
+
+    <section>
+      <h2>Results</h2>
+      <pre id="results"></pre>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; Nat #134353</p>
+  </footer>
+
+  <script>
+    const dealer = { name: "Dealer", rolls: [], hand: 0, bust: false };
+    const players = [];
+
+    function addPlayer() {
+      const name = prompt("Enter player name:");
+      if (name) {
+        players.push({ name, rolls: [], hand: 0, bust: false });
+        updateUI();
+      }
+    }
+
+    function removePlayer(index) {
+      players.splice(index, 1);
+      updateUI();
+    }
+
+    function addDealerRoll() {
+      const roll = parseInt(document.getElementById("dealer-roll-input").value);
+      if (isNaN(roll) || roll < 1 || roll > 10) {
+        alert("Please enter a valid roll between 1 and 10.");
+        return;
+      }
+
+      dealer.rolls.push(roll);
+      calculateHand(dealer);
+      updateUI();
+    }
+
+    function addPlayerRoll(index) {
+      const rollInput = document.getElementById(`player-roll-input-${index}`);
+      const roll = parseInt(rollInput.value);
+      if (isNaN(roll) || roll < 1 || roll > 10) {
+        alert("Please enter a valid roll between 1 and 10.");
+        return;
+      }
+
+      const player = players[index];
+      player.rolls.push(roll);
+      calculateHand(player);
+      updateUI();
+    }
+
+    function calculateHand(player) {
+      let aceCount = 0;
+      player.hand = 0;
+
+      player.rolls.forEach(roll => {
+        if (roll === 1) {
+          aceCount++;
+          player.hand += 11; // Assume ace is 11 initially
+        } else if (roll >= 10) {
+          player.hand += 10;
+        } else {
+          player.hand += roll;
+        }
+      });
+
+      while (player.hand > 21 && aceCount > 0) {
+        player.hand -= 10; // Convert an ace from 11 to 1
+        aceCount--;
+      }
+
+      player.bust = player.hand > 21;
+    }
+
+    function updateUI() {
+      // Update dealer
+      const dealerSpace = document.getElementById("dealer-space");
+      dealerSpace.innerHTML = `Hand: ${dealer.hand} ${dealer.bust ? '<span class="bust">BUST</span>' : ''}`;
+
+      // Update players
+      const playerContainer = document.getElementById("playerContainer");
+      playerContainer.innerHTML = "";
+      players.forEach((player, index) => {
+        const playerDiv = document.createElement("div");
+        playerDiv.classList.add("player");
+        playerDiv.innerHTML = `
+          <h3>${player.name}</h3>
+          <p>Hand: <span class="total">${player.hand}</span> ${player.bust ? '<span class="bust">BUST</span>' : ''}</p>
+          <label for="player-roll-input-${index}">Enter Roll (1-10):</label>
+          <input type="number" id="player-roll-input-${index}" min="1" max="10">
+          <button onclick="addPlayerRoll(${index})">Add Roll</button>
+          <button onclick="removePlayer(${index})">Remove Player</button>
+        `;
+        playerContainer.appendChild(playerDiv);
+      });
+    }
+
+    function evaluateGame() {
+      let results = "";
+      if (!dealer.bust && dealer.hand < 17) {
+        alert("Dealer must pass 17 before evaluation.");
+        return;
+      }
+
+      results += `Dealer hand: ${dealer.hand}\n`;
+
+      players.forEach(player => {
+        if (player.bust || (!dealer.bust && dealer.hand >= player.hand)) {
+          results += `${player.name} hand: ${player.hand} - LOST\n`;
+        } else {
+          results += `${player.name} hand: ${player.hand} - WON\n`;
+        }
+      });
+
+      document.getElementById("results").innerText = results;
+    }
+
+    function resetGame() {
+      dealer.rolls = [];
+      dealer.hand = 0;
+      dealer.bust = false;
+
+      players.forEach(player => {
+        player.rolls = [];
+        player.hand = 0;
+        player.bust = false;
+      });
+
+      updateUI();
+      document.getElementById("results").innerText = "";
+    }
+
+    updateUI();
+  </script>
 </body>
 </html>
