@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BC Dice Blackjack</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>BC Dice Blackjack</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="rules.html">Rules</a></li>
+                <li><a href="prices.html">Prices</a></li>
+                <li><a href="deal.html">Dealer tool</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main id="content">
+        <h2>Dice Blackjack Rules</h2>
+
+        <!-- Tab navigation with buttons -->
+        <div class="tabs">
+            <button class="nav-button active" onclick="showTab('tokens')">Tokens</button>
+            <button class="nav-button" onclick="showTab('game')">Game</button>
+            <button class="nav-button" onclick="showTab('bankruptcy')">Bankruptcy</button>
+            <button class="nav-button" onclick="showTab('purchase')">Purchase</button>
+            <button class="nav-button" onclick="showTab('dealtool')">Dealer Tool</button>
+        </div>
+
+        <!-- Tab content -->
+        <div class="tab-content active" id="tokens">
+            <h3>Tokens</h3>
+            <ul>
+                <li>Each player starts with 50 tokens</li>
+                <li>Tokens need to be displayed on easly visible sign</li>
+                <li>Players need to keep count of their tokens throughout the game, if a player miscounts dealer can impose a 10 token fine</li>
+                <li>Tokens can be exchanged between players</li>
+                <li>Tokens are lost upon exiting the casino, relog/crash doesn't count if the player rejoins in reasonable amount of time(dealer dependent)</li>
+            </ul>
+        </div>
+
+        <div class="tab-content" id="game">
+            <h3>Game</h3>
+            <ul>
+                <li>Dice Blackjack combines traditional blackjack rules with dice rolls.</li>
+                <li>The goal is to roll higher than dealer without rolling higher than 21</li>
+                <li>Everybody can be a dealer but owner and staff(WIP) have priority</li>
+                <li>If played on a map stand on X to become player</li>
+                <li></li>
+                <li><b>1. Betting phase</b> First the dealer takes the bets. Minimum bet is 20 tokens(dealer dependent). If player have insufficient tokens for minimum bet casino gives them a loan.</li>
+                <li><b>2. Initial deal</b> Now the dealer rolls one dice and players roll 2 dices. Dealer combines results and presents them to players.</li>
+                <li><b style="color:orange;">Roll values: </b>1 = ace, value 1 or 11 benefitial to player | 2-9 value equal to number | 10 = king/queen/jack, value 10</li>
+                <li><b>3. Player decision </b>Now player can decide to(for gagged players):
+                        <ul>
+                        <li>- stand(shake head): you keep your cards and wait until round end</li>
+                        <li>- hit(nod): you roll another dice (one at a time) until you bust or choose to stand</li>
+                        <li>- double down(giggle): you double your bet and take <b>one</b> more card</li>
+                        <li>- split(mumble): if dealt two cards of the same value you can put second bet and each card becomes a separate hand</li>
+                        <li>- surrender(groan): if you don't like your initial hand you can surrender half of your bet</li>
+                    </ul>
+                    If you are dealt 21 in initial deal you get instantly paid 3:2 of your bet
+                </li>
+                <li><b>4. Dealer play </b>Dealer hits until their bust or reach value of above 17 then they will stand. Then dealer announces winners/losers.</li>
+                <li><b>5. Break phase </b>After changing their account values players can spend their tokens on things listed in prices tab. Then another round starts.</li>
+                <li>If your account goes into negative check the backrupcy tab</li>
+                <li>You roll dice using <b style="color:orange;">/dice 10</b> command. Unless permited by dealer using other dices can be fined.</li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+
+        <div class="tab-content" id="bankruptcy">
+            <h3>Bankruptcy</h3>
+            <ul>
+                <li>If your token amount goes into negative you are considered bankrupt</li>
+                <li>Bankrupt player (BP) gets jailed in cage by the dealer and is presented with an option: play and try to win their freedom back or wait to be bought</li>
+                <li>Free players can spend money to buy caged players or interact with them as listed in prices tab</li>
+                <li>If BP decides to play they are given 40 tokens and are forced to play until they can buy themselves out or bankrupt again. Their minimum bet is reduced to 10.</li>
+                <li>If BP bankrupts again they are presented with the choice again. If they decide to play their value is decreased and given less tokens according to values below</li>
+                <ul>
+                    <li><b>First:(initial)</b> 40 tokens | 150 to buy | 200 to strip</li>
+                    <li><b>Second:</b> 30 tokens | 100 to buy | 150 to strip</li>
+                    <li><b>Third:</b> 20 tokens | 50 to buy | 100 to strip</li>
+                </ul>
+                <li>If BP bakrupts for the 4th time they are proposed with ultimatum: wait to be bought for the lowest price or play all or nothing against dealer</li>
+                <li>If BP wins the final deal they are set free and given initial 50 tokens again</li>
+                <li>If BP loses the final deal they become dealer/casino property</li>
+            </ul>
+        </div>
+
+        <div class="tab-content" id="purchase">
+            <h3>Purchase</h3>
+            <ul>
+                <li>During break time players can buy stuff listed in prices tab.</li>
+                <li>Players are limited to one transaction per break.</li>
+                <li>If a player gets purchased they become owned by the buyer and are required to obey to them</li>
+                <li>Owners can do whatever they want with their new prize, including leaving with them or setting them free</li>
+                <li>Player can be set free from their owner by spending at least 1hr in casino in full restraints or playing to repay their debt to owner. If they bankrupt they can try again but their sentence gets doubled.</li>
+            </ul>
+        </div>
+        <div class="tab-content" id="dealtool">
+            <h3>Dealer Tool</h3>
+            <ul>
+                <li>The dealer tool is very WIP (mainly done by ChatGPT)</li>
+                <li><span style="color:red">!BUG!</span> Reset All button only works on dealer so you will need to remove and add players every new deal</li>
+                <li>The pass button is obsolete as tool will auto pass above 17</li>
+                <li>First input the initial dealer roll then all player rolls and then input dealer until it passes or busts</li>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; Nat #134353</p>
+    </footer>
+
+    <script>
+        // Function to switch between tabs
+        function showTab(tabId) {
+            // Hide all tab contents
+            var contents = document.querySelectorAll('.tab-content');
+            contents.forEach(function(content) {
+                content.classList.remove('active');
+            });
+
+            // Remove active class from all buttons
+            var buttons = document.querySelectorAll('.nav-button');
+            buttons.forEach(function(button) {
+                button.classList.remove('active');
+            });
+
+            // Show the selected tab content and add active class to the selected button
+            document.getElementById(tabId).classList.add('active');
+            var activeButton = document.querySelector('.nav-button[onclick="showTab(\'' + tabId + '\')"]');
+            activeButton.classList.add('active');
+        }
+    </script>
+</body>
+</html>

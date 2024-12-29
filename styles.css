@@ -1,0 +1,327 @@
+    /* General Page Styles */
+    body {
+        font-family: 'Inter', sans-serif; 
+        margin: 0;
+        padding: 0;
+        background-color: #121212; /* Dark background */
+        color: #e0e0e0; /* Light text for good contrast */
+        display: flex;
+/*        justify-content: center;*/
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+    }
+
+    /* Header */
+    header {
+        width: 90%;
+        padding: 20px;
+        background-color: #1f1f1f; /* Dark header background */
+        text-align: center;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        margin-top: 30px;
+        margin-bottom: 30px;
+        border-radius: 10px;
+    }
+
+    header h1 {
+        font-size: 2.5rem;
+        color: #e0e0e0;
+        margin: 0;
+    }
+
+    /* Navigation */
+    nav ul {
+        display: flex;
+        justify-content: center;
+        gap: 25px;
+        list-style-type: none;
+        padding: 0;
+        margin-top: 15px;
+    }
+
+    nav ul li {
+        margin: 0;
+    }
+
+    nav ul li a {
+        text-decoration: none;
+        color: #4a90e2; /* Light blue for links */
+        font-size: 1.2rem;
+        font-weight: 500;
+        transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+        color: #357ab7; /* Darker blue on hover */
+    }
+
+    /* Main Content */
+    main {
+        width: 90%;
+        max-width: 1100px;
+        background-color: #1f1f1f; /* Dark main content background */
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    /* Dealer Section */
+    #dealerField {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+        align-items: center;
+    }
+
+    #dealerRollInput {
+        padding: 12px 20px;
+        font-size: 1.1rem;
+        border-radius: 10px;
+        border: 1px solid #444;
+        background-color: #333; /* Dark input background */
+        color: #e0e0e0;
+        width: 220px;
+        transition: border-color 0.3s;
+    }
+
+    #dealerRollInput:focus {
+        border-color: #4a90e2; /* Blue border on focus */
+    }
+
+    #addDealerRollButton,
+    #resetAllButton,
+    #passDealerButton {
+        padding: 12px 25px;
+        font-size: 1.1rem;
+        background-color: #4a90e2; /* Soft blue */
+        border: none;
+        border-radius: 8px;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.3s;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #addDealerRollButton:hover,
+    #resetAllButton:hover,
+    #passDealerButton:hover {
+        background-color: #357ab7;
+        transform: translateY(-2px); /* Slight lift effect */
+    }
+
+    /* Player Section */
+    #playerContainer {
+        display: flex;
+        justify-content: space-around;
+        gap: 30px;
+        margin-top: 30px;
+        flex-wrap: wrap;
+    }
+
+    .player {
+        background-color: #1f1f1f; /* Dark background for player */
+        padding: 25px;
+        border-radius: 12px;
+        width: 250px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .player:hover {
+        transform: translateY(-5px); /* Slight lift on hover */
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    }
+
+    .player h3 {
+        font-size: 1.5rem;
+        color: #e0e0e0;
+        margin-bottom: 15px;
+    }
+
+    .player input,
+    .player button {
+        padding: 12px;
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        border: 1px solid #444;
+        background-color: #333; /* Dark background for input and buttons */
+        color: #e0e0e0;
+        width: 100%;
+        transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    .player input:focus,
+    .player button:focus {
+        border-color: #4a90e2; /* Blue border on focus */
+    }
+
+    .player button:hover {
+        background-color: #444; /* Darker on hover */
+    }
+
+    /* Player Total & Results */
+    .player p {
+        font-size: 1.2rem;
+        color: #e0e0e0;
+    }
+
+    .player .total {
+        font-size: 1.4rem;
+        font-weight: bold;
+    }
+
+    .player .bust {
+        color: red;
+        display: none;
+    }
+
+    .player .result {
+        font-size: 1.4rem;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+
+    .player .result.win {
+        color: #2ecc71; /* Green for win */
+    }
+
+    .player .result.lose {
+        color: #e74c3c; /* Red for loss */
+    }
+
+    .player .result.tie {
+        color: #f1c40f; /* Yellow for tie */
+    }
+
+    /* Add Player Button */
+    #addPlayerButton {
+        background-color: #4a90e2; /* Soft blue */
+        color: white;
+        font-size: 1.2rem;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.3s;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #addPlayerButton:hover {
+        background-color: #357ab7;
+        transform: translateY(-2px);
+    }
+
+    /* Footer */
+    footer {
+        text-align: center;
+        margin-top: 40px;
+        font-size: 1.2rem;
+        color: #777;
+    }
+
+    footer p {
+        margin: 0;
+    }
+    .nav-button {
+            background-color: #4a90e2; /* Soft blue */
+            color: white;
+            font-size: 1.2rem;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            text-decoration: none;
+            margin: 5px;
+        }
+
+        .nav-button:hover {
+            background-color: #357ab7;
+            transform: translateY(-2px);
+        }
+
+        /* Basic tab styling with button-based layout */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+        div ul {
+        list-style-type: none; /* Removes bullet points */
+        padding: 0;            /* Removes padding */
+        margin: 0;             /* Removes margin */
+        border: none;          /* Removes any border */
+        box-shadow: none;
+        }
+
+        div li {
+        text-align: left; /* Align the text to the left */
+        margin-left: 20px;
+        margin: 2px;
+        }
+/* Table Styles */
+.table-container {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.price-category {
+    margin-bottom: 40px;
+}
+
+.price-category h3 {
+    font-size: 1.8rem;
+    color: #e0e0e0;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.price-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.price-table th,
+.price-table td {
+    padding: 12px;
+    border: 1px solid #444;
+    text-align: left;
+}
+
+.price-table th {
+    background-color: #333;
+    color: #e0e0e0;
+}
+
+.price-table td {
+    background-color: #1f1f1f;
+    color: #e0e0e0;
+}
+
+.price-table tr:nth-child(even) td {
+    background-color: #282828;
+}
+
+.price-table tr:hover td {
+    background-color: #444;
+}
