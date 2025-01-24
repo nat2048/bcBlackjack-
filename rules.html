@@ -36,10 +36,10 @@
             <h3>Tokens</h3>
             <ul>
                 <li>Each player starts with 50 tokens</li>
-                <li>Tokens need to be displayed on easly visible sign</li>
-                <li>Players need to keep count of their tokens throughout the game, if a player miscounts dealer can impose a 10 token fine</li>
+                <li>Tokens have to be displayed on easly visible sign</li>
+                <li>Players need to keep count of their tokens throughout the game</li>
                 <li>Tokens can be exchanged between players</li>
-                <li>Tokens are lost upon exiting the casino, relog/crash doesn't count if the player rejoins in reasonable amount of time(dealer dependent)</li>
+                <li>Tokens are lost upon exiting the casino, relog/crash doesn't count</li>
             </ul>
         </div>
 
@@ -49,26 +49,26 @@
                 <li>Dice Blackjack combines traditional blackjack rules with dice rolls.</li>
                 <li>The goal is to roll higher than dealer without rolling higher than 21</li>
                 <li>Everybody can be a dealer but owner and staff(WIP) have priority</li>
-                <li>If played on a map stand on red and grab a sign to become player</li>
+                <li>Stand on red, grab a sign and write 50 on it to become player</li>
                 <li></li>
-                <li><b>1. Betting phase</b> First the dealer takes the bets. Minimum bet is 20 tokens(dealer dependent). If player have insufficient tokens for minimum bet casino gives them a loan.</li>
-                <li><b>2. Initial deal</b> Now the dealer rolls one dice and players roll 2 dices. Dealer combines results and presents them to players.</li>
+                <li><b>1.</b>Dealer takes the bets. Minimum bet is 20 tokens. If you have no money for minimal bet casino can give you a loan(if you win you keep the won amount)</li>
+                <li><b>2.</b>Dealer rolls one dice and players roll 2 dices.</li>
                 <li><b style="color:orange;">Roll values: </b>1 = ace, value 1 or 11 benefitial to player | 2-9 value equal to number | 10 = king/queen/jack, value 10</li>
-                <li><b>3. Player decision </b>Now player can decide to(for gagged players):
+                <li><b>3.</b>Player can decide to(unable to speak):
                         <ul>
-                        <li>- stand(shake head): you keep your cards and wait until round end</li>
+                        <li>- stand(shake head): you keep your points and wait until round end</li>
                         <li>- hit(nod): you roll another dice (one at a time) until you bust or choose to stand</li>
-                        <li>- double down(giggle): you double your bet and take <b>one</b> more card</li>
+                        <li>- double down(giggle): you double your bet and take <b>one</b> more roll</li>
                         <li>- split(mumble): if dealt two cards of the same value you can put second bet and each card becomes a separate hand</li>
-                        <li>- surrender(groan): if you don't like your initial hand you can surrender half of your bet</li>
+                        <li>- surrender(groan): if you don't like your initial hand you can surrender for half of your bet</li>
                     </ul>
-                    If you are dealt 21 in initial deal you get instantly paid 3:2 of your bet
-                    If you have same amount as dealer you keep your bet
+                    21 in initial deal = instant 3:2 of your bet
+                    Same amount as dealer = keep your bet
                 </li>
-                <li><b>4. Dealer play </b>Dealer hits until their bust or reach value of above 17 then they will stand. Then dealer announces winners/losers.</li>
-                <li><b>5. Break phase </b>After changing their account values players can spend their tokens on things listed in prices tab. Then another round starts.</li>
-                <li>If your account goes into negative check the backrupcy tab</li>
-                <li>You roll dice using <b style="color:orange;">/dice 10</b> command. Unless permited by dealer using other dices can be fined.</li>
+                <li><b>4.</b>After all players stand/bust Dealer hits until they bust / reach 17 or higher. Dealer announces winners/losers.</li>
+                <li><b>5.</b>After updating their token amount players can spend them on things in prices tab.</li>
+                <li>If your tokens go into negative check the backrupcy tab</li>
+                <li>You roll dice using <b style="color:orange;">/dice 10</b> command.</li>
                 <li></li>
                 <li></li>
             </ul>
@@ -77,38 +77,47 @@
         <div class="tab-content" id="bankruptcy">
             <h3>Bankruptcy</h3>
             <ul>
-                <li>If your token amount goes into negative you are considered bankrupt</li>
-                <li>Bankrupt player (BP) gets jailed in cage by the dealer and is presented with an option: play and try to win their freedom back or wait to be bought</li>
-                <li>Free players can spend money to buy caged players or interact with them as listed in prices tab</li>
-                <li>If BP decides to play they are given 40 tokens and are forced to play until they can buy themselves out or bankrupt again. Their minimum bet is reduced to 10.</li>
-                <li>If BP bankrupts again they are presented with the choice again. If they decide to play their value is decreased and given less tokens according to values below</li>
+                <li>If your token amount is negative you are considered bankrupt</li>
+                <li>Bankrupt player (BP) gets jailed in cage by the dealer and can:
+                    <ol>
+                        <li>Play and try to win their freedom</li>
+                        <li>Wait to be bought</li>
+                    </ol>
+                <li>Free players can spend money to buy caged players or interact with them as in prices tab</li>
+                <li>If BP decides to play they receive 40 tokens and must play until they can buy themselves or go bankrupt again. Minimum bet is reduced to 10.</li>
+                <li>If BP bankrupts again they are presented with the choice again. If they decide to play their value is decreased and given less tokens as below:</li>
                 <ul>
-                    <li><b>First:(initial)</b> 40 tokens | 150 to buy | 200 to strip</li>
-                    <li><b>Second:</b> 30 tokens | 100 to buy | 150 to strip</li>
-                    <li><b>Third:</b> 20 tokens | 50 to buy | 100 to strip</li>
+                    <li>    <b>First:(initial)</b> 40 tokens | 150 to buy | 200 to strip</li>
+                    <li>    <b>Second:</b> 30 tokens | 100 to buy | 150 to strip</li>
+                    <li>    <b>Third:</b> 20 tokens | 50 to buy | 100 to strip</li>
                 </ul>
-                <li>If BP bakrupts for the 4th time they are proposed with ultimatum: wait to be bought for the lowest price or play all or nothing against dealer</li>
-                <li>If BP wins the final deal they are set free and given initial 50 tokens again</li>
-                <li>If BP loses the final deal they become dealer/casino property</li>
+                <li>4th bankrupcy BP is proposed with ultimatum:</li>
+                <ol>
+                        <li>Wait to be bought for the lowest price</li>
+                        <li>All or nothing against dealer</li>
+                        <ul>
+                            <li><b style="color:green">WIN</b>BP is set free</li>
+                            <li><b style="color:red">LOSS</b>BP becomes dealer property</li>
+                        </ul>
+                </ol>
+                <li>In case of no active players BP can be released but are required to spend 1hr in restraints chosen by dealer</li>
             </ul>
         </div>
 
         <div class="tab-content" id="purchase">
             <h3>Purchase</h3>
             <ul>
-                <li>During break time players can buy stuff listed in prices tab.</li>
-                <li>Players are limited to one transaction per break.</li>
-                <li>If a player gets purchased they become owned by the buyer and are required to obey to them</li>
+                <li>Between rounds players can buy stuff listed in prices tab.</li>
+                <li>If a player gets bought they become owned by the buyer and are required to obey to them</li>
                 <li>Owners can do whatever they want with their new prize, including leaving with them or setting them free</li>
-                <li>Player can be set free from their owner by spending at least 1hr in casino in full restraints or playing to repay their debt to owner. If they bankrupt they can try again but their sentence gets doubled.</li>
             </ul>
         </div>
         <div class="tab-content" id="dealtool">
             <h3>Dealer Tool</h3>
             <ul>
                 <li>Dealer tool is WIP</li>
-                <li>Use is simple add players, input their and dealer rolls and evaluate when all rolls are done</li>
-                <li>Dealer must hit until 17 and stand if on or above 17</li>
+                <li>Use is simple add players, input their and dealer rolls and hit evaluate when all rolls are done</li>
+                <li>Dealer must hit until 17 or higher</li>
             </ul>
         </div>
     </main>
