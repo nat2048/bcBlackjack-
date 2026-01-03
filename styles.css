@@ -12,11 +12,8 @@
         flex-direction: column;
     }
     #list{
-        border-style: solid;
-        border-width: 1px;
-        border-color: #e0e0e0;
-        border-radius: 3px;
-        padding: 3px;
+        list-style-type: circle;
+        padding: 5px;
     }
     /* Header */
     header {
@@ -333,6 +330,7 @@
 .price-table tr:hover td {
     background-color: #444;
 }
+
 
 
 
