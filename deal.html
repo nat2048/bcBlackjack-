@@ -162,8 +162,10 @@
       results += `Dealer hand: ${dealer.hand}\n`;
 
       players.forEach(player => {
-        if (player.bust || (!dealer.bust && dealer.hand >= player.hand)) {
+        if (player.bust || (!dealer.bust && dealer.hand > player.hand)) {
           results += `${player.name} hand: ${player.hand} - LOST\n`;
+        } else if (!player.bust && (!dealer.bust && dealer.hand == player.hand)){
+          results += `${player.name} hand: ${player.hand} - PUSH\n`;
         } else {
           results += `${player.name} hand: ${player.hand} - WON\n`;
         }
@@ -191,4 +193,5 @@
   </script>
 </body>
 </html>
+
 
